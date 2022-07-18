@@ -10,7 +10,7 @@ jobs:
     container:
       image: sammyne/scala:2.12.15-jdk8-ubuntu20.04
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         persist-credentials: false
     - name: Scala toolchains
@@ -19,11 +19,11 @@ jobs:
         sbt --version
     - name: Generate static files
       run: sbt doc
-    - name: Install git and rsync for JamesIves/github-pages-deploy-action@releases/v3
+    - name: Install git and rsync for JamesIves/github-pages-deploy-action@releases/v4
       run: apt update && apt install -y git rsync
     - name: Deploy docs
       uses: JamesIves/github-pages-deploy-action@releases/v4
       with:
-        access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        #access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         branch: gh-pages
         folder: target/scala-2.12/api
