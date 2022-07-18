@@ -19,8 +19,8 @@ jobs:
         sbt --version
     - name: Generate static files
       run: sbt doc
-    - name: Install rsync for JamesIves/github-pages-deploy-action@releases/v3
-      run: apt update && apt install -y rsync
+    - name: Install git and rsync for JamesIves/github-pages-deploy-action@releases/v3
+      run: apt update && apt install -y git rsync
     - name: Deploy docs
       uses: JamesIves/github-pages-deploy-action@releases/v4
       with:
