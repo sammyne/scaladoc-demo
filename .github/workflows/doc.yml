@@ -1,0 +1,29 @@
+name: doc
+
+on:
+  push:
+    branches: ["main"]
+  
+jobs:
+  docify:
+    runs-on: ubuntu-18.04
+    container:
+      image: sammyne/scala:2.12.15-jdk8-ubuntu20.04
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+    - name: Scala toolchains
+      run: |
+        scalac -version &&
+        sbt --version
+    - name: Generate static files
+      run: sbt doc
+    - name: Install rsync for JamesIves/github-pages-deploy-action@releases/v3
+      run: apt update && apt install -y rsync
+    - name: Deploy docs
+      uses: JamesIves/github-pages-deploy-action@releases/v4
+      with:
+        access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        branch: gh-pages
+        folder: target/scala-2.12/api
