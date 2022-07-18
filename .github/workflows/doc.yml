@@ -3,6 +3,10 @@ name: doc
 on:
   push:
     branches: ["main"]
+
+# ref: https://github.com/JamesIves/github-pages-deploy-action#permission-settings-%EF%B8%8F
+permissions:
+  contents: write
   
 jobs:
   docify:
