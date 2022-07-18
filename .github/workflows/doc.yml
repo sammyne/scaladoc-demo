@@ -16,6 +16,8 @@ jobs:
     container:
       image: sammyne/scala:2.12.15-jdk8-ubuntu20.04
     steps:
+    # sammyne/scala bundled without git, so installing it to avoid the RESTful fallback of actions/check.
+    # Otherwise, the fetched repository won't be a valid git repository.
     - name: Install git
       run: apt update && apt install -y git
     - uses: actions/checkout@v3
@@ -27,8 +29,11 @@ jobs:
         sbt --version
     - name: Generate static files
       run: sbt doc
-    - name: Install git and rsync for JamesIves/github-pages-deploy-action@releases/v4
-      run: apt update && apt install -y git rsync
+    - name: Install rsync for JamesIves/github-pages-deploy-action@releases/v4
+      run: apt update && apt install -y rsync
+    # https://github.blog/2022-04-12-git-security-vulnerability-announced/#cve-2022-24765
+    - name: Fix git CVE-2022-24765
+      run: git config --global --add safe.directory $GITHUB_WORKSPACE
     - name: check git
       run: pwd && ls && git log
     - name: Deploy docs
