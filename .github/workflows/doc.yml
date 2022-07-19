@@ -34,8 +34,6 @@ jobs:
     # https://github.blog/2022-04-12-git-security-vulnerability-announced/#cve-2022-24765
     - name: Fix git CVE-2022-24765
       run: git config --global --add safe.directory $GITHUB_WORKSPACE
-    - name: check git
-      run: pwd && ls && git log
     - name: Deploy docs
       uses: JamesIves/github-pages-deploy-action@releases/v4
       with:
